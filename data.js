@@ -1,7 +1,7 @@
-const slqite3 = require('sqlite3').verbose();
-const db = new slqite3.Database('./database.db', (err) => {
-  if(err) return console.log('Erreur lors de la connexion a la base de données');
-  return console.log('Connected to the database');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('money_mind.db', (err) => {
+  if(err) return console.error(err.message);
+  console.log('Connected to the SQLite database.');
 });
 
 module.exports = db;

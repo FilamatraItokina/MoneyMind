@@ -1,24 +1,20 @@
 require('dotenv').config();
-const {log} = require('console');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const authRoute = require('./routes/auth.route');
-const transactionRoute = require('./routes/transaction.route');
-const path = require('path');
-const cookieParser = require('cookie-parser');
+const TransactionRoute = require('./routes/transaction.route');
 
-app.use(cookieParser()); 
-app.use(express.static('public'));
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 app.use(express.json());
-app.use('/auth', authRoute);
-app.use('/transactions', transactionRoute);
 
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));  
+app.set('view engine', 'ejs');
+
+app.use('/auth', authRoute);
+app.use('/transactions', TransactionRoute);
 
 app.listen(port, () => {
-  log(`Server running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

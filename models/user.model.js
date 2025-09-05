@@ -1,34 +1,34 @@
 const db = require('../data');
 
 db.run(
-  `CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT NOT NULL,
-  email TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL)`
+  `
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE
+  )
+  `
 );
-
 
 const User = {
 
-  New: (username, email, password, callback) => {
-    db.run(
-      `INSERT INTO users (username, email, password) VALUES (?,?,?)`,
-      [username, email, password],
-      function(err){
-        callback(err, { id: this.lastID, username, email, password });
-      }
-    );
+  //Create
+  Create: (username, email , password, callback) => {
+    const query = `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`;
+    db.run(query, [username, email, password], (err, user) => {
+      if(err) return callback(err);
+      callback(null, {id: this.lastID, username, email});
+    });
   },
 
+  //Read
   FindByEmail: (email, callback) => {
-    db.get(
-      `SELECT * FROM users WHERE email = ?`,
-      [email],
-      function(err, user){
-        callback(err, user);
-      }
-    );
+    const query = `SELECT * FROM users WHERE email = ?`;
+    db.get(query, [email], (err, user) => {
+      if(err) return callback(err);
+      callback(null, user);
+    });
   }
 }
 
