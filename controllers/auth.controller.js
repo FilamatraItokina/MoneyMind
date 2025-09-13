@@ -43,7 +43,7 @@ exports.Register = async (req, res) => {
 
 
 exports.Login = async (req, res) => {
-  const {username, email, password} = req.body;
+  const {email, password} = req.body;
   console.log(username, email, password);
   if(!username || !email || !password) return res.status(400).render('login', { message: "Info required" });
 
