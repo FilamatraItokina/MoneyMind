@@ -7,20 +7,24 @@ form.addEventListener('submit', async (e) => {
     const email = form.email.value;
     const password = form.password.value;
 
-    const res = await fetch('http://localhost:3000/auth/register', {
+    const res = await fetch('http://localhost:5000/auth/register', {
         method: 'POST',
-        headeres: {
+        headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password
+        }),
         credentials: 'include'
     });
 
     const data = await res.json();
 
     if(res.ok){
-        window.location.href = 'http://localhost:3000/transactions';
+        window.location.href = 'http://localhost:5000/transactions';
     } else if(data.error){
-        alert(data.error);
+        alert(res.message);
     }
 });

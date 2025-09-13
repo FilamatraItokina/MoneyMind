@@ -1,16 +1,26 @@
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 const authRoute = require('./routes/auth.route');
 const TransactionRoute = require('./routes/transaction.route');
 
 
+// Body parsing middleware MUST come before routes
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());  
 
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));  
 app.set('view engine', 'ejs');
+
+// Debug middleware to log all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log('Body:', req.body);
+  next();
+});
 
 app.use('/auth', authRoute);
 app.use('/transactions', TransactionRoute);

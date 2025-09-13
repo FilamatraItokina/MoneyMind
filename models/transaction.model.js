@@ -19,7 +19,7 @@ const Transaction = {
   // Create
   Create: (userId, amount, type, category, date, description, callback) => {
     const query = `INSERT INTO transactions (user_id, amount, type, category, date, description) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.run(query, [userId, amount, type, category, date, description], (err, transaction) => {
+    db.run(query, [userId, amount, type, category, date, description], function(err) {
       if (err) return callback(err);
       callback(null, { id: this.lastID, userId, amount, type, category, date, description });
     });

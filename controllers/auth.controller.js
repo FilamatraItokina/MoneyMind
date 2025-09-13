@@ -5,6 +5,12 @@ const User = require('../models/user.model');
 
 
 exports.Register = async (req, res) => {
+  // Add safety check for req.body
+  if (!req.body || Object.keys(req.body).length === 0) {
+    console.log('req.body is empty or undefined');
+    return res.status(400).json({ message: "No data received" });
+  }
+  
   const {username, email, password} = req.body;
   if(!username || !email || !password) return res.status(400).json({ message: "Info required" });
 
@@ -25,7 +31,7 @@ exports.Register = async (req, res) => {
       {expiresIn: '7d'}
     );
 
-    req.res.cookie('token', token, {
+    res.cookie('token', token, {
       httpOnly: true,
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -36,17 +42,19 @@ exports.Register = async (req, res) => {
 }
 
 
-exports.Login = (req, res) => {
-const {email, password} = req.body;
-if (!username || !email)
-  return res.status(400).json({ message: "Info required" });
+exports.Login = async (req, res) => {
+  const {username, email, password} = req.body;
+  console.log(username, email, password);
+  if(!username || !email || !password) return res.status(400).render('login', { message: "Info required" });
 
+  // Find user by email or username
   User.FindByEmail(email, async function(err, user){
-    if(err) return res.status(500).json({ error: err.message });
-    if(!user) return res.status(404).json({ message: "No user found" });
+    if(err) return res.status(500).render('login', { error: err.message });
+    if(!user) return res.status(401).render('login', { message: "Invalid credentials" });
 
-    const valid = await bcrypt.compare(password, user.password);
-    if(!valid) return res.status(401).json({ message: "Wrong password" });
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if(!isValidPassword) return res.status(401).render('login', { message: "Invalid credentials" });
 
     const token = jwt.sign(
       {id: user.id, email: user.email, username: user.username},
@@ -54,12 +62,12 @@ if (!username || !email)
       {expiresIn: '7d'}
     );
 
-    req.cookie('token', token, {
+    res.cookie('token', token, {
       httpOnly: true,
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
-    return res.status(201).json({ message: "You are connected", token });
+    return res.status(200).json({ message: "Login successful", token });
   });
 }

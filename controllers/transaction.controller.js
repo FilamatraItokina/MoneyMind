@@ -1,4 +1,4 @@
-const e = require('express');
+const express = require('express');
 const Transaction = require('../models/transaction.model');
 
 exports.CreateTransaction = (req, res) => {
@@ -60,5 +60,14 @@ exports.GetTransactionsSummary = (req, res) => {
 }
 
 exports.renderTransactionPage = (req, res) => {
-  res.render('transactions'); // ou res.sendFile(...) selon ton moteur de rendu
-} 
+  const userId = req.user.id;
+  
+  Transaction.ReadAll(userId, (err, transactions) => {
+    if (err) {
+      console.error('Error fetching transactions:', err);
+      return res.render('transactions', { transactions: [] });
+    }
+    // Si transactions est null/undefined, utiliser un tableau vide
+    return res.render('transactions', { transactions: transactions || [] });
+  });
+}

@@ -15,6 +15,16 @@
     <label for="description">Description:</label>
     <input type="text" id="description" name="description" required><br><br>
     
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required><br><br>
+    
+    <label for="type">Type:</label>
+    <select id="type" name="type" required>
+      <option value="">Select type</option>
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select><br><br>
+    
     <label for="date">Date:</label>
     <input type="date" id="date" name="date" required><br><br>
     
@@ -22,15 +32,19 @@
   </form>
 
   <ul id="liste-transactions">
-    <% transactions.forEach(transaction => { %>
-      <li>
-        <span id="category"><%= transaction.category %"></span>
-        <span id="amount"><%= transaction.amount %"></span>
-        <span id="description"><%= transaction.description %"></span>
-        <span id="date"><%= transaction.date %"></span>
-        <span id="type"><%= transaction.type %></span>
-      </li>
-    <% }) %>
+    <% if (transactions && transactions.length > 0) { %>
+      <% transactions.forEach(transaction => { %>
+        <li>
+          <span id="category"><%= transaction.category %></span>
+          <span id="amount"><%= transaction.amount %></span>
+          <span id="description"><%= transaction.description %></span>
+          <span id="date"><%= transaction.date %></span>
+          <span id="type"><%= transaction.type %></span>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>Aucune transaction trouvée</li>
+    <% } %>
   </ul>
 
   <script src="/transactions.js"></script>
