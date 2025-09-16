@@ -6,8 +6,16 @@
   <title>MoneyMind/transactions</title>
 </head>
 <body>
+
   
   <h1>Transactions</h1>
+
+  <div id="summary">
+    <span id="expense">Expense: <%= summary.expense %></span>
+    <span id="balance">Balance: <%= summary.balance %></span>
+    <span id="income">Income: <%= summary.income %></span>
+  </div>
+  
   <form action="/transactions" method="POST">
     <label for="amount">Amount:</label>
     <input type="number" id="amount" name="amount" required><br><br>

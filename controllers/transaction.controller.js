@@ -1,14 +1,24 @@
-const express = require('express');
-const Transaction = require('../models/transaction.model');
+const express = require("express");
+const Transaction = require("../models/transaction.model");
 
 exports.CreateTransaction = (req, res) => {
   const { amount, type, category, date, description } = req.body;
   const userId = req.user.id;
 
-  Transaction.Create(userId, amount, type, category, date, description, (err, transaction) => {
-    if (err) return res.status(500).json({ error: err.message });
-    return res.status(201).json({ message: "Transaction created", transaction });
-  });
+  Transaction.Create(
+    userId,
+    amount,
+    type,
+    category,
+    date,
+    description,
+    (err, transaction) => {
+      if (err) return res.status(500).json({ error: err.message });
+      return res
+        .status(201)
+        .json({ message: "Transaction created", transaction });
+    }
+  );
 };
 
 exports.GetAllTransactions = (req, res) => {
@@ -18,7 +28,7 @@ exports.GetAllTransactions = (req, res) => {
     if (err) return res.status(500).json({ error: err.message });
     return res.status(200).json({ transactions });
   });
-};  
+};
 
 exports.GetTransactionsByCategory = (req, res) => {
   const userId = req.user.id;
@@ -51,23 +61,36 @@ exports.GetTransactionsByDate = (req, res) => {
 };
 
 exports.GetTransactionsSummary = (req, res) => {
-  const userId = req.user.id;  
+  const userId = req.user.id;
 
   Transaction.Summary(userId, (err, summary) => {
     if (err) return res.status(500).json({ error: err.message });
-    return res.status(200).json({ summary }); 
+    return res.render("transactions", {
+      summary: summary || [],
+    });
   });
-}
+};
 
 exports.renderTransactionPage = (req, res) => {
   const userId = req.user.id;
-  
+
   Transaction.ReadAll(userId, (err, transactions) => {
     if (err) {
-      console.error('Error fetching transactions:', err);
-      return res.render('transactions', { transactions: [] });
+      console.error("Error fetching transactions:", err);
+      return res.render("transactions", { transactions: [] });
     }
+
     // Si transactions est null/undefined, utiliser un tableau vide
-    return res.render('transactions', { transactions: transactions || [] });
+    const txs = transactions || [];
+    // Calcul du résumé
+    let income = 0,
+      expense = 0;
+    txs.forEach((tx) => {
+      if (tx.type === "income") income += tx.amount;
+      else if (tx.type === "expense") expense += tx.amount;
+    });
+    const balance = income - expense;
+    const summary = { income, expense, balance };
+    return res.render("transactions", { transactions: txs, summary });
   });
-}
+};

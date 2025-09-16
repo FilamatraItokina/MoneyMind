@@ -1,25 +1,27 @@
-const form = document.getElementById('form');
+const form = document.querySelector('form');
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const email = form.email.value;
-  const password = form.password.value;
-
   const res = await fetch('http://localhost:5000/auth/login', {
+
     method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
     body: JSON.stringify({
-      email: email,
-      password: password
+      email: form.email.value,
+      password: form.password.value
     }),
     credentials: 'include'
   });
 
   const data = await res.json();
+  
 
   if(res.ok){
     window.location.href = 'http://localhost:5000/transactions'
   } else {
     alert(res.message);
   }
-})
+});
