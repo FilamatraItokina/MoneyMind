@@ -67,6 +67,7 @@ exports.GetTransactionsSummary = (req, res) => {
     if (err) return res.status(500).json({ error: err.message });
     return res.render("transactions", {
       summary: summary || [],
+      username: req.user.username,
     });
   });
 };
@@ -77,7 +78,10 @@ exports.renderTransactionPage = (req, res) => {
   Transaction.ReadAll(userId, (err, transactions) => {
     if (err) {
       console.error("Error fetching transactions:", err);
-      return res.render("transactions", { transactions: [] });
+      return res.render("transactions", {
+        transactions: [],
+        username: req.user.username,
+      });
     }
 
     // Si transactions est null/undefined, utiliser un tableau vide
@@ -91,6 +95,10 @@ exports.renderTransactionPage = (req, res) => {
     });
     const balance = income - expense;
     const summary = { income, expense, balance };
-    return res.render("transactions", { transactions: txs, summary });
+    return res.render("transactions", {
+      transactions: txs,
+      summary,
+      username: req.user.username,
+    });
   });
 };
