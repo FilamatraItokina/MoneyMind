@@ -50,3 +50,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Network error:', error);
   }
 });
+
+const linkAccount = document.getElementById('account');
+
+linkAccount.addEventListener('click', async () => {
+  const res = await fetch('http://localhost:5000/auth/account', {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    credentials: 'include'
+  });
+
+  const data = await res.json();
+  console.log(data);
+})

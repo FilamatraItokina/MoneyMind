@@ -12,9 +12,8 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-
 // Page compte utilisateur (protégée)
-router.get("/account", authMiddleware, (req, res) => {
+router.get("/account",  authMiddleware, (req, res) => {
   console.log({ user: req.user });
   res.render("account", { user: req.user });
 });

@@ -15,12 +15,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-// Debug middleware to log all requests
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  console.log('Body:', req.body);
-  next();
-});
+
 
 app.use('/auth', authRoute);
 app.use('/transactions', TransactionRoute);
