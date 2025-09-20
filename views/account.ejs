@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoneyMind / Account</title>
-</head>
-<body>
-  
-  <h1 id="title">Bienvenue</h1><br/>
-  <h1 id="username"><%= user.username %></h1>
-
-  <form action="auth/logout">
-    <input type="submit" value="Logout">
-  </form>
-
-  <script src="/logout.js"></script>
-</body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/bootstrap.min.css" />
+    <title>MoneyMind / Mon Compte</title>
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="card shadow">
+            <div class="card-body text-center">
+              <h1 class="mb-4">Bienvenue</h1>
+              <div class="mb-3">
+                <div
+                  class="rounded-circle bg-secondary mx-auto mb-3"
+                  style="width: 80px; height: 80px"
+                ></div>
+                <h3 class="mb-1">
+                  Nom d'utilisateur :
+                  <span class="fw-bold"><%= user.username %></span>
+                </h3>
+                <h5 class="mb-3">
+                  Email : <span class="fw-normal"><%= user.email %></span>
+                </h5>
+              </div>
+              <form action="auth/logout">
+                <button type="submit" class="btn btn-danger w-100">
+                  Déconnexion
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

@@ -1,3 +1,34 @@
+// Modifier une transaction
+exports.UpdateTransaction = (req, res) => {
+  const userId = req.user.id;
+  const { id } = req.params;
+  const { amount, type, category, date, description } = req.body;
+  Transaction.Update(
+    userId,
+    id,
+    amount,
+    type,
+    category,
+    date,
+    description,
+    (err, transaction) => {
+      if (err) return res.status(500).json({ error: err.message });
+      return res
+        .status(200)
+        .json({ message: "Transaction modifiée", transaction });
+    }
+  );
+};
+
+// Supprimer une transaction
+exports.DeleteTransaction = (req, res) => {
+  const userId = req.user.id;
+  const { id } = req.params;
+  Transaction.Delete(userId, id, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    return res.status(200).json({ message: "Transaction supprimée", id });
+  });
+};
 const express = require("express");
 const Transaction = require("../models/transaction.model");
 

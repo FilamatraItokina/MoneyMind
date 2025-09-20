@@ -1,4 +1,4 @@
-const db = require('../data');
+const db = require("../data");
 
 db.run(
   `
@@ -19,10 +19,22 @@ const Transaction = {
   // Create
   Create: (userId, amount, type, category, date, description, callback) => {
     const query = `INSERT INTO transactions (user_id, amount, type, category, date, description) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.run(query, [userId, amount, type, category, date, description], function(err) {
-      if (err) return callback(err);
-      callback(null, { id: this.lastID, userId, amount, type, category, date, description });
-    });
+    db.run(
+      query,
+      [userId, amount, type, category, date, description],
+      function (err) {
+        if (err) return callback(err);
+        callback(null, {
+          id: this.lastID,
+          userId,
+          amount,
+          type,
+          category,
+          date,
+          description,
+        });
+      }
+    );
   },
   // Read
   ReadAll: (userId, callback) => {
@@ -50,7 +62,7 @@ const Transaction = {
   },
 
   FindByDate: (userId, date, callback) => {
-    const query = `SELECT * FROM transactions WHERE user_id = ? AND date = ?`;    
+    const query = `SELECT * FROM transactions WHERE user_id = ? AND date = ?`;
     db.all(query, [userId, date], (err, transactions) => {
       if (err) return callback(err);
       callback(null, transactions);
@@ -69,8 +81,35 @@ const Transaction = {
       if (err) return callback(err);
       callback(null, summary);
     });
-  }
+  },
+  // Update
+  Update: (userId, id, amount, type, category, date, description, callback) => {
+    const query = `UPDATE transactions SET amount = ?, type = ?, category = ?, date = ?, description = ? WHERE id = ? AND user_id = ?`;
+    db.run(
+      query,
+      [amount, type, category, date, description, id, userId],
+      function (err) {
+        if (err) return callback(err);
+        callback(null, {
+          id,
+          userId,
+          amount,
+          type,
+          category,
+          date,
+          description,
+        });
+      }
+    );
+  },
+  // Delete
+  Delete: (userId, id, callback) => {
+    const query = `DELETE FROM transactions WHERE id = ? AND user_id = ?`;
+    db.run(query, [id, userId], function (err) {
+      if (err) return callback(err);
+      callback(null, { id });
+    });
+  },
 };
-
 
 module.exports = Transaction;
