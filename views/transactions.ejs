@@ -96,6 +96,43 @@
           </form>
         </div>
       </div>
+      <!-- Formulaire de filtres -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <form id="filterForm" class="row g-3">
+            <div class="col-12 col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                id="filter-category"
+                placeholder="Catégorie"
+              />
+            </div>
+            <div class="col-12 col-md-3">
+              <select id="filter-type" class="form-select">
+                <option value="">Type</option>
+                <option value="income">Revenu</option>
+                <option value="expense">Dépense</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3">
+              <input type="date" class="form-control" id="filter-date" />
+            </div>
+            <div class="col-12 col-md-3 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary w-100">
+                Filtrer
+              </button>
+              <button
+                type="button"
+                id="resetFilter"
+                class="btn btn-secondary ms-2"
+              >
+                Réinitialiser
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="card">
         <div class="card-body">
           <h2 class="h4 mb-3">Liste des transactions</h2>

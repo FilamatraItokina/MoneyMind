@@ -115,3 +115,86 @@ if (editForm) {
     }
   });
 }
+
+// --- Filtres dynamiques ---
+const filterForm = document.getElementById("filterForm");
+const resetFilterBtn = document.getElementById("resetFilter");
+
+function renderTransactions(transactions) {
+  const tbody = document.querySelector("tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  if (!transactions || transactions.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center">Aucune transaction trouvée</td></tr>`;
+    return;
+  }
+  transactions.forEach((transaction) => {
+    tbody.innerHTML += `
+      <tr data-id="${transaction.id}">
+        <td>${transaction.category}</td>
+        <td>${transaction.amount}</td>
+        <td>${transaction.description}</td>
+        <td>${transaction.date}</td>
+        <td>${transaction.type}</td>
+        <td>
+          <button class="btn btn-sm btn-warning btn-edit me-1"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal"
+            data-id="${transaction.id}"
+            data-amount="${transaction.amount}"
+            data-description="${transaction.description}"
+            data-category="${transaction.category}"
+            data-type="${transaction.type}"
+            data-date="${transaction.date}">
+            Modifier
+          </button>
+          <button class="btn btn-sm btn-danger btn-delete" data-id="${transaction.id}">Supprimer</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+if (filterForm) {
+  filterForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const category = document.getElementById("filter-category").value.trim();
+    const type = document.getElementById("filter-type").value;
+    const date = document.getElementById("filter-date").value;
+
+    let url = null;
+    if (category) {
+      url = `/transactions/category/${encodeURIComponent(category)}`;
+    } else if (type) {
+      url = `/transactions/type/${encodeURIComponent(type)}`;
+    } else if (date) {
+      url = `/transactions/date/${encodeURIComponent(date)}`;
+    } else {
+      url = "/transactions";
+    }
+
+    const res = await fetch(url, { credentials: "include" });
+    if (res.ok) {
+      const data = await res.json();
+      renderTransactions(data.transactions || data);
+    } else {
+      renderTransactions([]);
+    }
+  });
+}
+
+if (resetFilterBtn) {
+  resetFilterBtn.addEventListener("click", async () => {
+    document.getElementById("filter-category").value = "";
+    document.getElementById("filter-type").value = "";
+    document.getElementById("filter-date").value = "";
+    // Recharge toutes les transactions
+    const res = await fetch("/transactions", { credentials: "include" });
+    if (res.ok) {
+      const data = await res.json();
+      renderTransactions(data.transactions || data);
+    } else {
+      renderTransactions([]);
+    }
+  });
+}
