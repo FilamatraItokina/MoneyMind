@@ -4,35 +4,72 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/bootstrap.min.css" />
+    <link rel="stylesheet" href="/moneymind.css" />
     <title>MoneyMind / Transactions</title>
   </head>
   <body class="bg-light">
-    <div class="container py-4">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="/auth/account" class="btn btn-outline-primary"
-          ><%= username %></a
-        >
-        <h1 class="mb-0">Transactions</h1>
+    <div class="container py-3 px-2 px-md-4">
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3"
+      >
+        <a href="/" class="moneymind-logo">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="16" cy="16" r="16" fill="#1abc60" />
+            <text
+              x="16"
+              y="22"
+              text-anchor="middle"
+              font-size="18"
+              font-family="Montserrat,Arial,sans-serif"
+              fill="#fff"
+              font-weight="bold"
+            >
+              M
+            </text>
+          </svg>
+          MoneyMind
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <span class="fw-semibold text-secondary d-none d-md-inline"
+            >Connecté :</span
+          >
+          <a href="/auth/account" class="btn btn-outline-success px-3"
+            ><%= username %></a
+          >
+        </div>
       </div>
-      <div class="row mb-4">
+      <div class="row mb-4 summary-cards">
         <div class="col-12 col-md-4 mb-2">
-          <div class="card text-bg-danger text-center">
+          <div class="card text-bg-danger text-center py-2">
             <div class="card-body">
-              Dépenses : <span class="fw-bold"><%= summary.expense %></span>
+              <span class="fs-5">Dépenses</span><br />
+              <span class="fw-bold fs-4">-<%= summary.expense %> €</span>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-2">
-          <div class="card text-bg-secondary text-center">
+          <div
+            class="card text-bg-light text-center py-2 border border-2 border-success"
+          >
             <div class="card-body">
-              Solde : <span class="fw-bold"><%= summary.balance %></span>
+              <span class="fs-5">Solde</span><br />
+              <span class="fw-bold fs-4" style="color: #1abc60"
+                ><%= summary.balance %> €</span
+              >
             </div>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-2">
-          <div class="card text-bg-success text-center">
+          <div class="card text-bg-success text-center py-2">
             <div class="card-body">
-              Revenus : <span class="fw-bold"><%= summary.income %></span>
+              <span class="fs-5">Revenus</span><br />
+              <span class="fw-bold fs-4">+<%= summary.income %> €</span>
             </div>
           </div>
         </div>

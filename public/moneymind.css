@@ -1,0 +1,88 @@
+/* MoneyMind custom styles */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap");
+
+:root {
+  --mm-green: #1abc60;
+  --mm-green-dark: #128c44;
+  --mm-bg: #f7fafb;
+  --mm-card: #fff;
+  --mm-border: #e0e0e0;
+  --mm-text: #222;
+}
+
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  background: var(--mm-bg);
+  color: var(--mm-text);
+}
+
+.moneymind-logo {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: var(--mm-green) !important;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .moneymind-logo {
+    font-size: 1.5rem;
+  }
+  .summary-cards .col-md-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+.summary-cards .card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(30, 180, 96, 0.08);
+}
+
+.card {
+  border-radius: 1rem;
+}
+
+.btn-success,
+.btn-primary {
+  background: var(--mm-green);
+  border: none;
+}
+.btn-success:hover,
+.btn-primary:hover {
+  background: var(--mm-green-dark);
+}
+
+.table thead th {
+  background: var(--mm-green);
+  color: #fff;
+  border: none;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f3f8f5;
+}
+
+input,
+select,
+textarea {
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--mm-border) !important;
+}
+
+.modal-content {
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e9f7ef;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mm-green);
+  border-radius: 4px;
+}
