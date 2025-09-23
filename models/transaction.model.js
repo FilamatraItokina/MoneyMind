@@ -9,7 +9,7 @@ db.run(
   type TEXT NOT NULL CHECK(type IN ('income', 'expense')),
   category TEXT NOT NULL,
   date DATE NOT NULL,
-  description TEXT,
+  description TEXT DEFAULT '',
   FOREIGN KEY(user_id) REFERENCES users(id)
   )
   `
