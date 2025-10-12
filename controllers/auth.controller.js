@@ -42,7 +42,7 @@ exports.Register = async (req, res) => {
       result: {
         username: username,
         email: email,
-        id: id,
+        id: userId,
       },
       token,
     });
