@@ -1,4 +1,6 @@
 const form = document.querySelector("form");
+const API_URL = "http://moneymind-hc1s.onrender.com";
+
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -25,7 +27,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const res = await fetch("http://localhost:5000/auth/login", {
+  const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -40,7 +42,7 @@ form.addEventListener("submit", async (e) => {
   const data = await res.json();
 
   if (res.ok) {
-    window.location.href = "http://localhost:5000/transactions";
+    window.location.href = `${API_URL}/transactions`;
   } else {
     errorDiv.textContent = data.message || "Erreur lors de la connexion.";
     errorDiv.classList.remove("d-none");

@@ -9,7 +9,7 @@ form.addEventListener("submit", async (event) => {
   const category = form.category.value;
   const type = form.type.value;
 
-  const res = await fetch("/transactions", {
+  const res = await fetch(`${API_URL}/transactions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ form.addEventListener("submit", async (event) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const res = await fetch("/transactions", {
+    const res = await fetch(`${API_URL}/transactions`, {
       method: "GET",
       credentials: "include",
     });
