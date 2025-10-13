@@ -43,7 +43,7 @@ form.addEventListener("submit", async (e) => {
   const data = await res.json();
 
   if (res.ok) {
-    window.location.href = `${API_URL}/transactions`;
+    window.location.href = "/transactions";
   } else if (data.error) {
     errorDiv.textContent = data.message || "Erreur lors de l'inscription.";
     errorDiv.classList.remove("d-none");

@@ -42,7 +42,7 @@ form.addEventListener("submit", async (e) => {
   const data = await res.json();
 
   if (res.ok) {
-    window.location.href = `${API_URL}/transactions`;
+    window.location.href = `/transactions`;
   } else {
     errorDiv.textContent = data.message || "Erreur lors de la connexion.";
     errorDiv.classList.remove("d-none");
