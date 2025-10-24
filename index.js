@@ -1,8 +1,8 @@
-app.enable('trust proxy');
 require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
+app.enable('trust proxy');
 const port = process.env.PORT || 3000;
 const authRoute = require('./routes/auth.route');
 const TransactionRoute = require('./routes/transaction.route');
