@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const res = await fetch(`http://moneymind-hc1s.onrender.com/auth/register`, {
+  const res = await fetch(`https://moneymind-hc1s.onrender.com/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
