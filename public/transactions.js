@@ -9,7 +9,7 @@ form.addEventListener("submit", async (event) => {
   const category = form.category.value;
   const type = form.type.value;
 
-  const res = await fetch(`${API_URL}/transactions`, {
+  const res = await fetch(`http://moneymind-hc1s.onrender.com/transactions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ form.addEventListener("submit", async (event) => {
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const res = await fetch(`${API_URL}/transactions`, {
+    const res = await fetch(`http://moneymind-hc1s.onrender.com/transactions`, {
       method: "GET",
       credentials: "include",
     });
@@ -56,7 +56,7 @@ document.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-delete")) {
     const id = e.target.getAttribute("data-id");
     if (confirm("Voulez-vous vraiment supprimer cette transaction ?")) {
-      const res = await fetch(`/transactions/${id}`, {
+      const res = await fetch(`http://moneymind-hc1s.onrender.com/transactions/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -97,7 +97,7 @@ if (editForm) {
     const category = document.getElementById("edit-category").value;
     const type = document.getElementById("edit-type").value;
     const date = document.getElementById("edit-date").value;
-    const res = await fetch(`/transactions/${id}`, {
+    const res = await fetch(`http://moneymind-hc1s.onrender.com/transactions/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -189,7 +189,7 @@ if (resetFilterBtn) {
     document.getElementById("filter-type").value = "";
     document.getElementById("filter-date").value = "";
     // Recharge toutes les transactions
-    const res = await fetch("/transactions", { credentials: "include" });
+    const res = await fetch("http://moneymind-hc1s.onrender.com/transactions", { credentials: "include" });
     if (res.ok) {
       const data = await res.json();
       renderTransactions(data.transactions || data);
