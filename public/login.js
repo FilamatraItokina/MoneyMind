@@ -1,6 +1,4 @@
 const form = document.querySelector("form");
-const API_URL = "http://moneymind-hc1s.onrender.com";
-
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -27,7 +25,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const res = await fetch(`${API_URL}/auth/login`, {
+  const res = await fetch(`http://moneymind-hc1s.onrender.com/auth/login`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
